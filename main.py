@@ -8,19 +8,11 @@ Authorization = 'qQt+ZMVQZ3c3dzmomq8xeYeuR4akxg51RkeTSi5XRssZkTNwIt'
 async def fetch_profile_data():
     while True:
         # Fetch data from REST API
-        
+        requests.post("https://ntfy.sh/sell_algo",
+        data="sell algo live  ".encode(encoding='utf-8'))
 
-        headers = {
-          'Authorization': Authorization, 
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15',
-          'Content-Type': 'application/json'
-        }
-
-        r = requests.get('https://cdn.india.deltaex.org/v2/profile', headers=headers)
-        #print("Profile Data:", r.json())
-        
-        # Wait for 60 seconds before fetching again
-        await asyncio.sleep(120)
+       
+        await asyncio.sleep(300)
 
 async def place_target_order(order_type,side,order_product,order_size,stop_order_type,stop_price):
     # Define the payload
@@ -51,6 +43,8 @@ async def place_target_order(order_type,side,order_product,order_size,stop_order
     # Check if the request was successful
     if response.status_code == 200:
         print("Order placed successfully.")
+        requests.post("https://ntfy.sh/delta_trade",
+        data="Order placed successfully ".encode(encoding='utf-8'))
     else:
         print("Failed to place order. Status code:", response.status_code)
 
@@ -79,6 +73,8 @@ async def place_order(order_type,side,order_product_id,order_size,stop_order_typ
     
     # Check if the request was successful
     if response.status_code == 200:
+        requests.post("https://ntfy.sh/delta_trade",
+        data="Order placed successfully ".encode(encoding='utf-8'))
         print("Order placed successfully.")
         await place_target_order("market_order","buy",order_product_id,1,"take_profit_order",target_value )
     else:
